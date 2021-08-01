@@ -8,7 +8,7 @@ Hiện nay tài liệu cho việc tạo plugin cho flutter khá ít, mà tài li
 Để tạo 1 plugin bạn cần dùng lệnh **flutter create --template=plugin**
 - Sử dụng tùy chọn **--platforms** để chỉ định plugin sẽ có những ngôn ngữ nào. Có các tùy chọn như: **android, ios, web, linux, macos, windows**
 - Sử dụng tùy chọn **--org** để chỉ định tên miền cho tổ chức của bạn
-- Sử dụng tùy chọn **--a** để chỉ định ngôn ngữ cho ios. Bạn có thể chọn **java** hoặc **kotlin**
+- Sử dụng tùy chọn **--a** để chỉ định ngôn ngữ cho android. Bạn có thể chọn **java** hoặc **kotlin**
 - Sử dụng tùy chọn **--i** để chỉ định ngôn ngữ cho ios. Bạn có thể chọn **swift** hoặc **objc**
 - Và cuối cùng sẽ là tên plugin của bạn
 
@@ -17,22 +17,22 @@ Tham khảo:
 flutter create --org com.example --template=plugin --platforms=android,ios -a kotlin -i swift sample_plugin_flutter
 ```
 
-Sau khi thao tác trên bạn sẽ có 1 plugin trong thư mục sample_plugin_flutter với các file cơ bản sau:
-- **lib/sample_plugin_flutter.dart**
-API Dart cho plugin. File này dùng để kết nối các thành phần của plugin, kết nối với native code
-- **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt**
-Triển khai API plugin trong Kotlin dành riêng cho nền tảng Android.
-- **ios/Classes/SwiftSamplePluginFlutterPlugin.swift**
-Triển khai API plugin trong Swift dành riêng cho nền tảng iOS.
-- **example/**
-Một ứng dụng Flutter phụ thuộc vào plugin và minh họa cách sử dụng nó.
-- **lib/src/**
-Thư mục này sẽ không có sẵn, nhưng bạn cần tạo thư mục này để chứa các file private. Bạn chỉ public các file cần thiết thông qua khai báo export trong **lib/sample_plugin_flutter.dart**
+Sau khi thao tác trên bạn sẽ có 1 plugin trong thư mục sample_plugin_flutter với một số file cơ bản sau:
+- **lib/sample_plugin_flutter.dart** 
+=> API Dart cho plugin. File này dùng để kết nối các thành phần của plugin, kết nối với native code
+- **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** 
+=> Triển khai API plugin trong Kotlin dành riêng cho nền tảng Android.
+- **ios/Classes/SwiftSamplePluginFlutterPlugin.swift** 
+=> Triển khai API plugin trong Swift dành riêng cho nền tảng iOS.
+- **example/** 
+=> Một ứng dụng Flutter phụ thuộc vào plugin và minh họa cách sử dụng nó.
+- **lib/src/** 
+=> Thư mục này sẽ không có sẵn, nhưng bạn cần tạo thư mục này để chứa các file private. Bạn chỉ public các file cần thiết thông qua khai báo export trong **lib/sample_plugin_flutter.dart**
 
 
 ## Phần 2. Hướng dẫn tạo Widget với plugin
 
-Để tạo Widget hay Function để người dùng plugin để thể gọi và dụng dụng, bạn cần đưa file đó vào thư mục src và export nó ra ngoài. Khi làm vậy, người dùng chỉ cần import 1 dòng duy nhất là có thể sử dụng plugin của bạn.
+Để tạo Widget hay Function để người dùng plugin để thể gọi và sử dụng, bạn cần đưa file đó vào thư mục src và export nó ra ngoài. Khi làm vậy, người dùng chỉ cần import 1 dòng duy nhất là có thể sử dụng plugin của bạn.
 
 Trong thư mục **lib/src** các bạn tạo 1 file dart mới và đặt tên là **sample_button.dart**
 
@@ -78,13 +78,13 @@ Trong thư mục **lib/src** các bạn tạo thêm file **src.dart**, file này
 export 'sample_button.dart';
 ```
 
-Trong file **lib/sample_plugin_flutter.dart** bạn nên xóa hết code mặc định đi. File này các bạn sẽ chứa những file bạn muốn export hoặc export những plugin khác có trong dependence của bạn
+Trong file **lib/sample_plugin_flutter.dart** bạn nên xóa hết code mặc định đi. File này các bạn sẽ chứa những file bạn muốn export hoặc export những plugin khác có trong dependence của bạn.
 
 ```dart
 export 'src/src.dart';
 ```
 
-Giờ thì thử show Widget này lên từ app example nhé. Trong file **example/lib/main.dart** bạn đổi lại code như sau.
+Giờ thì thử build Widget này lên từ app example nhé. Trong file **example/lib/main.dart** bạn đổi lại code như sau:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -127,7 +127,7 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
-Chạy **flutter run** để xem kết quả thôi nào
+Chạy **flutter run** để xem kết quả thôi nào.
 
 ![Sample 1](assets_readme/sample_1.png)
 
@@ -135,17 +135,19 @@ Chạy **flutter run** để xem kết quả thôi nào
 
 ### 1. Làm việc với IDE native
 Khi làm việc với native code, bạn nên dùng Android Studio khi code Android và Xcode khi code iOS nhé. 2 IDE này sẽ hỗ trợ bạn tốt hơn trong việc báo lỗi và cả debug code. 
- - Trong Android Studio bạn mở thư mục **example/android/**, giao diện cây thư mục trong IDE sẽ như thế này
+ - Trong Android Studio bạn mở thư mục **example/android/**, giao diện cây thư mục trong IDE sẽ như thế này.
  ![Sample 2](assets_readme/sample_2.png)
  
- - Trong Xcode bạn mở thư mục **example/ios/Runner.xcworkspace**, giao diện cây thư mục trong IDE sẽ như thế này
+ - Trong Xcode bạn mở thư mục **example/ios/Runner.xcworkspace**, giao diện cây thư mục trong IDE sẽ như thế này.
  ![Sample 3](assets_readme/sample_3.png)
 
 
 ### 2. Code native cho plugin
-Để gọi native code, bạn sẽ cần sử dụng channel, thường channel nên được đặt cùng tên với tên plugin của bạn. Thông qua channel chúng ta sẽ gọi hàm native và nhận kết quả từ đó. Các bạn có thể tham khảo mapping các loại biến giữa các nền tảng [tại đây](https://flutter.dev/docs/development/platform-integration/platform-channels#codec)
+Để gọi native code, bạn sẽ cần sử dụng channel, thường channel nên được đặt cùng tên với tên plugin của bạn. Thông qua channel chúng ta sẽ gọi hàm native và nhận kết quả từ đó. 
 
-Trong thư mục **lib/src** các bạn tạo 1 file dart mới và đặt tên là **sample_call_native.dart**. File này sẽ tạo **MethodChannel('sample_plugin_flutter')** để liên kết đến native code và hàm **platformVersion()** để kiểm tra version của máy người dùng.
+Các bạn có thể tham khảo mapping các loại biến giữa các nền tảng [tại đây](https://flutter.dev/docs/development/platform-integration/platform-channels#codec).
+
+Trong thư mục **lib/src** các bạn tạo 1 file dart mới và đặt tên là **sample_call_native.dart**. File này sẽ tạo **MethodChannel('sample_plugin_flutter')** để liên kết đến native code và hàm **platformVersion()** để kiểm tra version của thiết bị người dùng.
 
 ```dart
 import 'dart:async';
@@ -168,7 +170,9 @@ Trong file **lib/src/src.dart** các bạn thêm dòng export.
 ```dart
 export 'sample_call_native.dart';
 ```
-Trong file **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** đã code demo sẵn channel và cách trả về platformVersion như minh họa phía dưới. Tại hàm onMethodCall, cần kiểm tra tên call.method được gọi là gì và trả về cho flutter kết quả thông qua result.success(). Lưu ý nếu bạn gọi 1 function không cần trả kết quả, bạn vẫn phải gọi result.success(null) để báo về cho flutter biết hàm đã thực hiện xong.
+Trong file **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** đã code demo sẵn channel và cách trả về platformVersion như minh họa phía dưới. Tại hàm onMethodCall, cần kiểm tra tên call.method được gọi là gì và trả về cho flutter kết quả thông qua result.success(). 
+
+Lưu ý: nếu bạn gọi 1 function không cần trả kết quả, bạn vẫn phải gọi result.success(null) để báo về cho flutter biết hàm đã thực hiện xong.
 
 ```kotlin
 package com.example.sample_plugin_flutter
@@ -211,6 +215,7 @@ class SamplePluginFlutterPlugin: FlutterPlugin, MethodCallHandler {
 ```
 
 Tương tự trong file **ios/Classes/SwiftSamplePluginFlutterPlugin.swift** đã code demo sẵn channel và cách trả về platformVersion như minh họa phía dưới. Tại hàm handle, cần kiểm tra tên call.method được gọi là gì và trả về cho flutter kết quả thông qua result(). Nếu bạn gọi 1 function không cần trả kết quả, bạn vẫn cần gọi result(nil) để báo về cho flutter biết hàm đã thực hiện xong.
+
 ```swift
 import Flutter
 import UIKit
@@ -233,7 +238,7 @@ public class SwiftSamplePluginFlutterPlugin: NSObject, FlutterPlugin {
 }
 ```
 
-Trong file **example/lib/main.dart** bạn đổi lại code như sau
+Trong file **example/lib/main.dart** bạn đổi lại code như sau:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -284,16 +289,16 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
-Chạy **flutter run** để xem kết quả thôi nào
+Chạy **flutter run** để xem kết quả thôi nào.
 
 ![Sample 4](assets_readme/sample_4.png)
 
 ## Phần 4: Hướng dẫn thêm thư viện native
 
-Trong bài viết này, mình sẽ demo việc gửi 1 DateTime từ flutter xuống native code để kiểm tra xem có phải ngày hiện tại hay không? 
+Trong phần này, mình sẽ demo việc gửi 1 DateTime từ flutter xuống native code để kiểm tra xem có phải ngày hiện tại hay không? 
 Mình sẽ sử dụng thư viện [Tempo](https://github.com/cesarferreira/tempo) của tác giả cesarferreira cho Android và [SwiftDate](https://cocoapods.org/pods/SwiftDate) của tác giả Daniele Margutti cho iOS.
 
-Vì flutter và native không giao tiếp với nhau bằng biến kiểu DateTime được, nên mình sẽ cần chuyển DateTime sang dạng string UTC để xử lý nhé.
+Vì flutter và native không giao tiếp với nhau bằng biến loại DateTime được, nên mình sẽ cần chuyển DateTime sang dạng string UTC để xử lý nhé.
 
 ### Thêm code flutter để hiển thị kết quả
 
@@ -311,7 +316,7 @@ Trong file **lib/src/sample_call_native.dart** các bạn thêm 1 hàm như sau:
     return isSuccess;
   }
 ```
-Trong file **example/lib/main.dart** bạn đổi lại code như sau
+Trong file **example/lib/main.dart** bạn đổi lại code như sau:
 
 ```dart
 import 'package:flutter/material.dart';
@@ -379,7 +384,9 @@ class _MyAppState extends State<MyApp> {
 ### Thêm thư viện cho iOS
 
 Thường khi thêm 1 thư viện vào code iOS, bạn cần sử dụng Cocoapods thêm nó vào Podfile. Nhưng với plugin thì bạn sẽ thêm dependency nó vào **ios/sample_plugin_flutter.podspec**. 
+
 File này cũng giúp bạn khai báo *s.static_framework = true*(1 số thư viện native cần phải khai báo biến này) hay s.ios.deployment_target = '9.0' (để giới hạn version build iOS). 
+
 (Nếu bạn chưa biết Cocoapods là gì, bạn có thể tham khảo [tại đây](https://guides.cocoapods.org/using/using-cocoapods.html))
 
 ```shell
@@ -410,7 +417,7 @@ end
 ```
 
 Sau đó bạn cần chạy **pod install** cho thư mục **example/ios** và vào Xcode chọn menu **Product/Clean Build Folder**. 
-Trong file **SwiftSamplePluginFlutterPlugin** bạn đổi lại code như sau
+Trong file **SwiftSamplePluginFlutterPlugin** bạn đổi lại code như sau:
 
 ```swift
 import Flutter
@@ -447,7 +454,7 @@ public class SwiftSamplePluginFlutterPlugin: NSObject, FlutterPlugin {
 }
 ```
 
-Thế là xong bên iOS, giờ qua phần của Android
+Thế là xong bên iOS, giờ qua phần của Android.
 
 ### Thêm thư viện cho Android
 
@@ -459,7 +466,7 @@ dependencies {
 ```
 ![Sample 5](assets_readme/sample_5.png)
 
-Trong file **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** bạn đổi lại code như sau 
+Trong file **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** bạn đổi lại code như sau:
 
 ```kotlin
 package com.example.sample_plugin_flutter
@@ -519,14 +526,13 @@ class SamplePluginFlutterPlugin: FlutterPlugin, MethodCallHandler {
 }
 ```
 
-Xong rồi, giờ chạy **flutter run** để xem thành quả cuối cùng thôi nào
+Xong rồi, giờ chạy **flutter run** để xem thành quả cuối cùng thôi nào.
 
 ![Sample 6](assets_readme/sample_6.png)
 
 ## Kết thúc
 Hi vọng qua bài viết của mình giúp ích cho các bạn phần nào việc làm qua  viết plugin cho Flutter.
-Mình để link project ở đây để các bạn tham khảo nha.
-[Github](https://github.com/tidu01059/sample_plugin_flutter)
+Mình để link [Github](https://github.com/tidu01059/sample_plugin_flutter) ở đây để các bạn tham khảo nha.
 
 Nguồn tham khảo:
 - [Developing packages & plugins](https://flutter.dev/docs/development/packages-and-plugins/developing-packages)
