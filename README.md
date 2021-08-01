@@ -542,7 +542,7 @@ Nguồn tham khảo:
 - [Cocoapods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
 
-Cảm ơn bạn các đã xem bài viết.
+Cảm ơn các bạn đã xem bài viết.
 ## Tác giả
 Phạm Tiến Dũng
 tidu01059@gmail.com
