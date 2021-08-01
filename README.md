@@ -6,13 +6,13 @@ Hiện nay tài liệu cho việc tạo plugin cho flutter khá ít, mà tài li
 ## Phần 1. Hướng dẫn tạo plugin
 
 Để tạo 1 plugin bạn cần dùng lệnh **flutter create --template=plugin**
-Sử dụng tùy chọn **--platforms** để chỉ định plugin sẽ có thêm ngôn ngữ nào. Có các tùy chọn như: **android, ios, web, linux, macos, windows**
-Sử dụng tùy chọn **--org** để chỉ định tên miền cho tổ chức của bạn
-Sử dụng tùy chọn **--a** để chỉ định ngôn ngữ cho ios. Bạn có thể chọn **java** hoặc **kotlin**
-Sử dụng tùy chọn **--i** để chỉ định ngôn ngữ cho ios. Bạn có thể chọn **swift** hoặc **objc**
-Và cuối cùng sẽ là tên plugin của bạn
+- Sử dụng tùy chọn **--platforms** để chỉ định plugin sẽ có những ngôn ngữ nào. Có các tùy chọn như: **android, ios, web, linux, macos, windows**
+- Sử dụng tùy chọn **--org** để chỉ định tên miền cho tổ chức của bạn
+- Sử dụng tùy chọn **--a** để chỉ định ngôn ngữ cho ios. Bạn có thể chọn **java** hoặc **kotlin**
+- Sử dụng tùy chọn **--i** để chỉ định ngôn ngữ cho ios. Bạn có thể chọn **swift** hoặc **objc**
+- Và cuối cùng sẽ là tên plugin của bạn
 
-Ví dụ:
+Tham khảo:
 ```bash
 flutter create --org com.example --template=plugin --platforms=android,ios -a kotlin -i swift sample_plugin_flutter
 ```
@@ -20,14 +20,14 @@ flutter create --org com.example --template=plugin --platforms=android,ios -a ko
 Sau khi thao tác trên bạn sẽ có 1 plugin trong thư mục sample_plugin_flutter với các file cơ bản sau:
 - **lib/sample_plugin_flutter.dart**
 API Dart cho plugin. File này dùng để kết nối các thành phần của plugin, kết nối với native code
-- **android/src/main/java/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt**
+- **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt**
 Triển khai API plugin trong Kotlin dành riêng cho nền tảng Android.
 - **ios/Classes/SwiftSamplePluginFlutterPlugin.swift**
 Triển khai API plugin trong Swift dành riêng cho nền tảng iOS.
 - **example/**
 Một ứng dụng Flutter phụ thuộc vào plugin và minh họa cách sử dụng nó.
 - **lib/src/**
-Thư mục này sẽ không có sẵn, nhưng bạn cần tạo thư mục này để chứa các file private. Bạn chỉ export các file cần thiết thông qua khai báo trong **lib/sample_plugin_flutter.dart**
+Thư mục này sẽ không có sẵn, nhưng bạn cần tạo thư mục này để chứa các file private. Bạn chỉ public các file cần thiết thông qua khai báo export trong **lib/sample_plugin_flutter.dart**
 
 
 ## Phần 2. Hướng dẫn tạo Widget với plugin
@@ -135,17 +135,17 @@ Chạy **flutter run** để xem kết quả thôi nào
 
 ### 1. Làm việc với IDE native
 Khi làm việc với native code, bạn nên dùng Android Studio khi code Android và Xcode khi code iOS nhé. 2 IDE này sẽ hỗ trợ bạn tốt hơn trong việc báo lỗi và cả debug code. 
- - Bạn mở **example/android/** trong Android Studio, giao diện cây thư mục trong IDE sẽ như thế này
+ - Trong Android Studio bạn mở thư mục **example/android/**, giao diện cây thư mục trong IDE sẽ như thế này
  ![Sample 2](assets_readme/sample_2.png)
  
- - Bạn mở **example/ios/Runner.xcworkspace** trong Xcode, giao diện cây thư mục trong IDE sẽ như thế này
+ - Trong Xcode bạn mở thư mục **example/ios/Runner.xcworkspace**, giao diện cây thư mục trong IDE sẽ như thế này
  ![Sample 3](assets_readme/sample_3.png)
 
 
 ### 2. Code native cho plugin
-Để gọi native code, bạn sẽ cần sử dụng channel, thường channel nên được đặt cùng tên với tên plugin của bạn. Thông qua channel chúng ta sẽ gọi hàm native và nhận kết quả từ đó. Tham khảo mapping loại của biến giữa các nền tảng [tại đây](https://flutter.dev/docs/development/platform-integration/platform-channels#codec)
+Để gọi native code, bạn sẽ cần sử dụng channel, thường channel nên được đặt cùng tên với tên plugin của bạn. Thông qua channel chúng ta sẽ gọi hàm native và nhận kết quả từ đó. Các bạn có thể tham khảo mapping các loại biến giữa các nền tảng [tại đây](https://flutter.dev/docs/development/platform-integration/platform-channels#codec)
 
-Trong thư mục **lib/src** các bạn tạo 1 file dart mới và đặt tên là **sample_call_native.dart**. File này sẽ tạo **MethodChannel('sample_plugin_flutter')** để liên kết đến native code và function **platformVersion()** để kiểm tra version của máy người dùng.
+Trong thư mục **lib/src** các bạn tạo 1 file dart mới và đặt tên là **sample_call_native.dart**. File này sẽ tạo **MethodChannel('sample_plugin_flutter')** để liên kết đến native code và hàm **platformVersion()** để kiểm tra version của máy người dùng.
 
 ```dart
 import 'dart:async';
@@ -168,7 +168,7 @@ Trong file **lib/src/src.dart** các bạn thêm dòng export.
 ```dart
 export 'sample_call_native.dart';
 ```
-Trong file **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** đã code demo sẵn channel và cách trả về platformVersion như minh họa phía dưới. Tại hàm onMethodCall, cần kiểm tra tên call.method được gọi là gì và trả về cho flutter kết quả thông qua result.success(). Nếu bạn gọi 1 function không cần trả kết quả, bạn vẫn cần gọi result.success(null) để báo về cho flutter biết hàm đã thực hiện xong.
+Trong file **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** đã code demo sẵn channel và cách trả về platformVersion như minh họa phía dưới. Tại hàm onMethodCall, cần kiểm tra tên call.method được gọi là gì và trả về cho flutter kết quả thông qua result.success(). Lưu ý nếu bạn gọi 1 function không cần trả kết quả, bạn vẫn phải gọi result.success(null) để báo về cho flutter biết hàm đã thực hiện xong.
 
 ```kotlin
 package com.example.sample_plugin_flutter
@@ -290,9 +290,9 @@ Chạy **flutter run** để xem kết quả thôi nào
 
 ## Phần 4: Hướng dẫn thêm thư viện native
 
-Trong bài viết này, mình sẽ demo việc gửi 1 DateTime từ flutter xuống native code để kiểm tra xem có phải ngày hiện tại hay không?
-Mình sẽ sử dụng thư viện [Tempo](https://github.com/cesarferreira/tempo) của tác giả cesarferreira cho Android và 
-[SwiftDate](https://cocoapods.org/pods/SwiftDate) của tác giả Daniele Margutti cho iOS.
+Trong bài viết này, mình sẽ demo việc gửi 1 DateTime từ flutter xuống native code để kiểm tra xem có phải ngày hiện tại hay không? 
+Mình sẽ sử dụng thư viện [Tempo](https://github.com/cesarferreira/tempo) của tác giả cesarferreira cho Android và [SwiftDate](https://cocoapods.org/pods/SwiftDate) của tác giả Daniele Margutti cho iOS.
+
 Vì flutter và native không giao tiếp với nhau bằng biến kiểu DateTime được, nên mình sẽ cần chuyển DateTime sang dạng string UTC để xử lý nhé.
 
 ### Thêm code flutter để hiển thị kết quả
@@ -378,9 +378,9 @@ class _MyAppState extends State<MyApp> {
 
 ### Thêm thư viện cho iOS
 
-Thường khi thêm 1 thư viện vào code iOS, bạn cần sử dụng Cocoapod thêm nó vào Podfile. Nhưng với plugin thì bạn sẽ thêm dependency nó vào **ios/sample_plugin_flutter.podspec**. 
-File này cũng giúp bạn khai báo *s.static_framework = true*(1 số thư viện native cần phải khai báo biến này) hay s.ios.deployment_target = '9.0' (để giới hạn version build iOS)
-(Nếu bạn chưa biết Cocoapod là gì, bạn có thể tham khảo [tại đây](https://guides.cocoapods.org/using/using-cocoapods.html))
+Thường khi thêm 1 thư viện vào code iOS, bạn cần sử dụng Cocoapods thêm nó vào Podfile. Nhưng với plugin thì bạn sẽ thêm dependency nó vào **ios/sample_plugin_flutter.podspec**. 
+File này cũng giúp bạn khai báo *s.static_framework = true*(1 số thư viện native cần phải khai báo biến này) hay s.ios.deployment_target = '9.0' (để giới hạn version build iOS). 
+(Nếu bạn chưa biết Cocoapods là gì, bạn có thể tham khảo [tại đây](https://guides.cocoapods.org/using/using-cocoapods.html))
 
 ```shell
 #
@@ -409,7 +409,7 @@ A new flutter plugin project.
 end
 ```
 
-Sau đó bạn cần chạy **pod install** cho thư mục **example/ios** và vào Xcode chọn **menu Product/Clean Build Folder**. Giờ thì import SwiftDate vào project thôi.
+Sau đó bạn cần chạy **pod install** cho thư mục **example/ios** và vào Xcode chọn menu **Product/Clean Build Folder**. 
 Trong file **SwiftSamplePluginFlutterPlugin** bạn đổi lại code như sau
 
 ```swift
@@ -451,7 +451,7 @@ Thế là xong bên iOS, giờ qua phần của Android
 
 ### Thêm thư viện cho Android
 
-Trong **Gradle Scripts/build.gradle(Module: android.sample_plugin_flutter) bạn thêm dòng bên dưới ở cuối file và nhấn Sync now
+Trong **Gradle Scripts/build.gradle(Module: android.sample_plugin_flutter)** bạn thêm dòng bên dưới ở cuối file và nhấn **Sync now**
 ```shell
 dependencies {
   implementation 'com.github.cesarferreira:tempo:+'
@@ -459,7 +459,7 @@ dependencies {
 ```
 ![Sample 5](assets_readme/sample_5.png)
 
-Trong file **android/src/main/java/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** bạn đổi lại code như sau 
+Trong file **android/src/main/kotlin/com/example/sample_plugin_flutter/SamplePluginFlutterPlugin.kt** bạn đổi lại code như sau 
 
 ```kotlin
 package com.example.sample_plugin_flutter
@@ -527,6 +527,13 @@ Xong rồi, giờ chạy **flutter run** để xem thành quả cuối cùng th�
 Hi vọng qua bài viết của mình giúp ích cho các bạn phần nào việc làm qua  viết plugin cho Flutter.
 Mình để link project ở đây để các bạn tham khảo nha.
 [Github](https://github.com/tidu01059/sample_plugin_flutter)
+
+Nguồn tham khảo:
+- [Developing packages & plugins](https://flutter.dev/docs/development/packages-and-plugins/developing-packages)
+- [Bảng mapping các loại biến giữa các nền tảng](https://flutter.dev/docs/development/platform-integration/platform-channels#codec)
+- [Thư viện Tempo](https://github.com/cesarferreira/tempo)
+- [Thư viện SwiftDate](https://cocoapods.org/pods/SwiftDate)
+- [Cocoapods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
 
 Cảm ơn bạn các đã xem bài viết.
