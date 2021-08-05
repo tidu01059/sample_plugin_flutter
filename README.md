@@ -1,4 +1,4 @@
-# [Flutter] Hướng dẫn tạo plugin flutter và gọi thư viện native từ plugin
+# [Flutter] Hướng dẫn tạo plugin và gọi thư viện native
 
 ## Giới thiệu
 Hiện nay tài liệu cho việc tạo plugin cho flutter khá ít, mà tài liệu để plugin gọi xuống các thư viện native càng hiếm hơn nữa. Nên hôm nay mình viết bài này để giúp mọi người dễ dàng hơn trong việc viết plugin với flutter. Cùng bắt đầu thôi nào!
